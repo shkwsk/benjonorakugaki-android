@@ -63,14 +63,15 @@
       <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/shkwsk/myapp01/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.75313807">
-              <caret line="240" column="32" selection-start-line="240" selection-start-column="32" selection-end-line="240" selection-end-column="32" />
+            <state vertical-scroll-proportion="0.8472803">
+              <caret line="141" column="0" selection-start-line="141" selection-start-column="0" selection-end-line="141" selection-end-column="0" />
               <folding>
                 <element signature="method#onStatusChanged#0;class#MainActivity#0" expanded="false" />
                 <element signature="method#onProviderEnabled#0;class#MainActivity#0" expanded="false" />
                 <element signature="method#onProviderDisabled#0;class#MainActivity#0" expanded="false" />
                 <element signature="method#getLocationInfo#0;class#MainActivity#0" expanded="false" />
                 <element signature="method#requestLocationList#0;class#MainActivity#0" expanded="false" />
+                <element signature="e#9363#12395#0" expanded="true" />
                 <element signature="e#9829#11731#0" expanded="true" />
                 <element signature="e#11730#11731#0" expanded="true" />
                 <element signature="e#12394#12395#0" expanded="true" />
@@ -2454,7 +2455,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24318507" sideWeight="0.4883721" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3442623" sideWeight="0.5080058" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34296978" sideWeight="0.5080058" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -2496,13 +2497,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="26" selection-start-line="0" selection-start-column="26" selection-end-line="0" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/shkwsk/myapp01/LocationActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="111" column="16" selection-start-line="111" selection-start-column="16" selection-end-line="111" selection-end-column="16" />
         </state>
       </provider>
     </entry>
@@ -2556,6 +2550,7 @@
             <element signature="method#onProviderDisabled#0;class#MainActivity#0" expanded="false" />
             <element signature="method#getLocationInfo#0;class#MainActivity#0" expanded="false" />
             <element signature="method#requestLocationList#0;class#MainActivity#0" expanded="false" />
+            <element signature="e#9363#12395#0" expanded="true" />
             <element signature="e#9829#11731#0" expanded="true" />
             <element signature="e#11730#11731#0" expanded="true" />
             <element signature="e#12394#12395#0" expanded="true" />
@@ -2567,13 +2562,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="18" column="17" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/shkwsk/myapp01/LocationActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -2634,17 +2622,11 @@
             <element signature="method#onProviderDisabled#0;class#MainActivity#0" expanded="false" />
             <element signature="method#getLocationInfo#0;class#MainActivity#0" expanded="false" />
             <element signature="method#requestLocationList#0;class#MainActivity#0" expanded="false" />
+            <element signature="e#9363#12395#0" expanded="true" />
             <element signature="e#9829#11731#0" expanded="true" />
             <element signature="e#11730#11731#0" expanded="true" />
             <element signature="e#12394#12395#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/shkwsk/myapp01/LocationActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -2705,6 +2687,7 @@
             <element signature="method#onProviderDisabled#0;class#MainActivity#0" expanded="false" />
             <element signature="method#getLocationInfo#0;class#MainActivity#0" expanded="false" />
             <element signature="method#requestLocationList#0;class#MainActivity#0" expanded="false" />
+            <element signature="e#9363#12395#0" expanded="true" />
             <element signature="e#9829#11731#0" expanded="true" />
             <element signature="e#11730#11731#0" expanded="true" />
             <element signature="e#12394#12395#0" expanded="true" />
@@ -2751,6 +2734,7 @@
             <element signature="method#onProviderDisabled#0;class#MainActivity#0" expanded="false" />
             <element signature="method#getLocationInfo#0;class#MainActivity#0" expanded="false" />
             <element signature="method#requestLocationList#0;class#MainActivity#0" expanded="false" />
+            <element signature="e#9363#12395#0" expanded="true" />
             <element signature="e#9829#11731#0" expanded="true" />
             <element signature="e#11730#11731#0" expanded="true" />
             <element signature="e#12394#12395#0" expanded="true" />
@@ -2819,13 +2803,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-3.8888888">
           <caret line="7" column="56" selection-start-line="7" selection-start-column="56" selection-end-line="7" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/shkwsk/myapp01/LocationActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.2021277">
-          <caret line="68" column="9" selection-start-line="68" selection-start-column="9" selection-end-line="68" selection-end-column="9" />
         </state>
       </provider>
     </entry>
@@ -2939,14 +2916,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/shkwsk/myapp01/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.75313807">
-          <caret line="240" column="32" selection-start-line="240" selection-start-column="32" selection-end-line="240" selection-end-column="32" />
+        <state vertical-scroll-proportion="0.8472803">
+          <caret line="141" column="0" selection-start-line="141" selection-start-column="0" selection-end-line="141" selection-end-column="0" />
           <folding>
             <element signature="method#onStatusChanged#0;class#MainActivity#0" expanded="false" />
             <element signature="method#onProviderEnabled#0;class#MainActivity#0" expanded="false" />
             <element signature="method#onProviderDisabled#0;class#MainActivity#0" expanded="false" />
             <element signature="method#getLocationInfo#0;class#MainActivity#0" expanded="false" />
             <element signature="method#requestLocationList#0;class#MainActivity#0" expanded="false" />
+            <element signature="e#9363#12395#0" expanded="true" />
             <element signature="e#9829#11731#0" expanded="true" />
             <element signature="e#11730#11731#0" expanded="true" />
             <element signature="e#12394#12395#0" expanded="true" />
