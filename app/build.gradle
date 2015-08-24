@@ -24,3 +24,24 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.2.1'
     compile 'com.google.android.gms:play-services:7.5.0'
 }
+
+apply plugin: 'deploygate'
+
+deploygate {
+    userName = "shkwsk"
+    token = "44a76631b60d44e3df60a8234156c6d111dbfc7b"
+
+    apks {
+        release {
+            sourceFile = file("/Users/shkwsk/AndroidStudioProjects/MyApp01/app/build/outputs/apk/app-release.apk")
+        }
+
+        debug {
+            sourceFile = file("/Users/shkwsk/AndroidStudioProjects/MyApp01/app/build/outputs/apk/app-debug.apk")
+
+            //Below is optional
+            message = "Please test rakugaki!"
+            visibility = "public" // default private
+        }
+    }
+}
