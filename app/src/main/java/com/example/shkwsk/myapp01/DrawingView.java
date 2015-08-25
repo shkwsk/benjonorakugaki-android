@@ -36,6 +36,7 @@ public class DrawingView extends View {
     private Bitmap bmp = null; //Viewの状態を保存するためのBitmap
     private Paint paint;
     private int color = Color.RED;
+    private boolean DRAWING = false;
 
     public DrawingView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -61,6 +62,7 @@ public class DrawingView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent e) {
+        DRAWING = true;
         //イベントのタイプごとに処理を設定
         switch(e.getAction()){
             case MotionEvent.ACTION_DOWN: //最初のポイント
@@ -95,6 +97,12 @@ public class DrawingView extends View {
 //    }
 
     public void commit(File dir, String url) {
+        if (!DRAWING) {
+            Toast.makeText(getContext(), "何からくがきしてみてください。", Toast.LENGTH_LONG).show();
+            return;
+        }
+        Toast.makeText(getContext(), "らくがきしています…", Toast.LENGTH_LONG).show();
+
         System.out.println("commit");
         File ext_file = new File(Environment.getExternalStorageDirectory().getPath()+"/drawbm/");
         try{
@@ -105,14 +113,14 @@ public class DrawingView extends View {
         String image_path = "tmp.png";
 
         File tmp_file = new File(ext_file, image_path);
-        //File tmp_file = new File(dir, image_path);
+        //File tmp_file = new File(dir, image_path); //本番
         // 描画画像保存
         //Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.id.drawing_view);
         System.out.println(tmp_file);
         try {
             FileOutputStream fos = new FileOutputStream(tmp_file);
             //PNG形式で出力
-            Bitmap resizedBitmap = Bitmap.createScaledBitmap(bmp, 480, 640, false);
+            Bitmap resizedBitmap = Bitmap.createScaledBitmap(bmp, 480, 640, false); // 何も描画していないとエラーで落ちる
             resizedBitmap.compress(CompressFormat.PNG, 100, fos);
             fos.flush();
             fos.close();
@@ -152,18 +160,16 @@ public class DrawingView extends View {
                 }
             };
             task.execute(url, ext_file.toString(), image_path);
-            //task.execute(url, dir.toString(), image_path);
+            //task.execute(url, dir.toString(), image_path); //本番
         } catch (Exception e) {
             System.out.println(e); // IOerror, URLerror
         }
 
-        Toast.makeText(getContext(), "らくがきしました。", Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), "らくがきしました！", Toast.LENGTH_LONG).show();
     }
 
     public void setColor(int color) {
-        //paint = new Paint();
-        System.out.println("set color.");
-        //paint.setColor(Color.BLUE);
+        System.out.println("color:"+ color);
         this.color = color;
     }
 }

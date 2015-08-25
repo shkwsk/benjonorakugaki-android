@@ -9,7 +9,6 @@ import android.os.AsyncTask;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.ViewGroup.LayoutParams;
 
 import android.widget.ImageView;
@@ -33,17 +32,10 @@ public class DrawActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_draw);
         System.out.println("start DrawActivity.");
 
-        try {
-            Class.forName("android.os.AsyncTask");
-        } catch (ClassNotFoundException e) {
-            System.out.println(e);
-        }
-
-        System.out.println("start DrawActivity.");
+        // サーバとの描画通信に用いるURL
         url = getIntent().getExtras().getString("url");
         post_url = getIntent().getExtras().getString("query");
 

@@ -10,31 +10,27 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-    <ScrollView
-        android:layout_gravity="center_horizontal"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/text_view"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/scrollView">
+        android:text="@string/app_name"
+        android:textSize="40dp"
+        android:textColor="@color/gray2"
+        android:gravity="center"
+        android:layout_above="@+id/title_image"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
-        <TextView
-            android:id="@+id/text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </ScrollView>
-
-    <!--<ImageView-->
-        <!--android:id="@+id/gazou"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:src="@drawable/toilet" />-->
-
-    <fragment
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/map"
-        tools:context=".MainActivity"
-        android:name="com.google.android.gms.maps.SupportMapFragment" />
+    <ImageView
+        android:id="@+id/title_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="fitCenter"
+        android:src="@drawable/virtual_rakugaki_128"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
