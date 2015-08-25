@@ -1,6 +1,5 @@
 package com.example.shkwsk.myapp01;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -8,15 +7,12 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
-import android.graphics.BitmapFactory;
 
-import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.io.*;
@@ -24,10 +20,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.*;
 import java.net.URL;
-import java.net.HttpURLConnection;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
-import java.util.HashMap;
 
 public class DrawingView extends View {
     private float posx = 0f; //イベントが起きたX座標
@@ -112,8 +106,8 @@ public class DrawingView extends View {
         }catch(SecurityException e){}
         String image_path = "tmp.png";
 
-        File tmp_file = new File(ext_file, image_path);
-        //File tmp_file = new File(dir, image_path); //本番
+        //File tmp_file = new File(ext_file, image_path); //テスト
+        File tmp_file = new File(dir, image_path); //本番
         // 描画画像保存
         //Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.id.drawing_view);
         System.out.println(tmp_file);
@@ -159,8 +153,8 @@ public class DrawingView extends View {
                     }
                 }
             };
-            task.execute(url, ext_file.toString(), image_path);
-            //task.execute(url, dir.toString(), image_path); //本番
+            //task.execute(url, ext_file.toString(), image_path); //テスト
+            task.execute(url, dir.toString(), image_path); //本番
         } catch (Exception e) {
             System.out.println(e); // IOerror, URLerror
         }

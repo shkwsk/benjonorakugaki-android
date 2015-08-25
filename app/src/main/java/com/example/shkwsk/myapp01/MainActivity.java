@@ -1,27 +1,17 @@
 package com.example.shkwsk.myapp01;
 
 import android.os.Bundle;
-import android.os.Message;
 import android.support.v4.app.FragmentActivity;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
-import android.widget.ImageView;
 import android.widget.Toast;
-
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-
 import android.content.Intent;
-import android.content.res.Resources;
 
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.provider.Settings;
-import android.support.v7.app.AppCompatActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,11 +19,6 @@ import org.json.JSONObject;
 public class MainActivity extends FragmentActivity implements LocationListener {
 
     private LocationManager locationManager;
-    private final String Port = ":3000";
-    private final String URL = "http://27.120.85.147" + Port;
-    // タイトル画像
-//    Resources res = this.getApplication().getResources();
-//    Bitmap title_image = BitmapFactory.decodeResource(res, R.drawable.virtual_rakugaki_128);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +27,6 @@ public class MainActivity extends FragmentActivity implements LocationListener {
         System.out.println("System start MainActivity.");
 
         System.out.println("onCreate()");
-//        ImageView v = (ImageView)findViewById(R.id.gazou);
-//        v.setImageBitmap(toilet);
-
         // LocationManager インスタンス生成
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
@@ -91,6 +73,7 @@ public class MainActivity extends FragmentActivity implements LocationListener {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        invalidateOptionsMenu();
         return true;
     }
 
@@ -115,8 +98,6 @@ public class MainActivity extends FragmentActivity implements LocationListener {
 
         JSONObject location_json = getLocationInfo(location);
         System.out.println(location_json);
-//        requestLocationList(location_json);
-//        mapLocationList(location_list);
         Intent intent_sb = new Intent(MainActivity.this, SelectBoardActivity.class);
         intent_sb.putExtra("location_json", location_json.toString());
         try {
@@ -124,8 +105,7 @@ public class MainActivity extends FragmentActivity implements LocationListener {
         } catch (Exception ex) {
             System.out.println(ex);
         }
-//        ImageView v = (ImageView)findViewById(R.id.gazou);
-//        v.setImageBitmap(null);
+        MainActivity.this.finish(); // タイトル画面にはもう戻らない
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.example.shkwsk.myapp01;
 
 import android.content.Intent;
-import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -40,8 +39,8 @@ public class SelectBoardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_board);
-        System.out.println("start SelectBoardActivity.");
 
+        System.out.println("start SelectBoardActivity.");
         String location_str = getIntent().getExtras().getString("location_json");
         try {
             JSONObject location_json = new JSONObject(location_str);
@@ -50,6 +49,7 @@ public class SelectBoardActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         mapLocationList();
+        Toast.makeText(getApplicationContext(), "地図マーカーをタップしてね。", Toast.LENGTH_LONG).show();
     }
 
     @Override

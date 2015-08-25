@@ -1,4 +1,8 @@
 # benjonorakugaki-android
+### Version 0.1.1
+- SDカードから内部ストレージにtmp画像を保存。
+- 地図マーカーをタップするよう促すトーストの表示。
+
 ### Version 0.1.0
 - Yアワードに投稿
 - トップ画面作成

@@ -1,7 +1,5 @@
 package com.example.shkwsk.myapp01;
 
-import android.content.Context;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.AsyncTask;
@@ -9,21 +7,20 @@ import android.os.AsyncTask;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
 
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.LinearLayout;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.BitmapFactory;
-import android.widget.Toast;
-import android.widget.RelativeLayout;
 
 import java.io.*;
 import java.net.URL;
+
+import android.app.ActionBar;
+import android.app.Activity;
 
 public class DrawActivity extends AppCompatActivity {
     private DrawingView drawingView;
@@ -33,6 +30,7 @@ public class DrawActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_draw);
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
         System.out.println("start DrawActivity.");
 
         // サーバとの描画通信に用いるURL
