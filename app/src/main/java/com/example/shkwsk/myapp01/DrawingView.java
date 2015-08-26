@@ -31,6 +31,9 @@ public class DrawingView extends View {
     private Paint paint;
     private int color = Color.RED;
     private boolean DRAWING = false;
+    Toast msg_please_rakugaki = Toast.makeText(getContext(), "何からくがきしてみてください。", Toast.LENGTH_LONG);
+    Toast msg_wait_rakugaki = Toast.makeText(getContext(), "らくがきしています…", Toast.LENGTH_LONG);
+    Toast msg_complete_rakugaki = Toast.makeText(getContext(), "らくがきしました！", Toast.LENGTH_LONG);
 
     public DrawingView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -92,11 +95,10 @@ public class DrawingView extends View {
 
     public void commit(File dir, String url) {
         if (!DRAWING) {
-            Toast.makeText(getContext(), "何からくがきしてみてください。", Toast.LENGTH_LONG).show();
+            msg_please_rakugaki.show();
             return;
         }
-        Toast.makeText(getContext(), "らくがきしています…", Toast.LENGTH_LONG).show();
-
+        msg_wait_rakugaki.show();
         System.out.println("commit");
         File ext_file = new File(Environment.getExternalStorageDirectory().getPath()+"/drawbm/");
         try{
@@ -158,8 +160,8 @@ public class DrawingView extends View {
         } catch (Exception e) {
             System.out.println(e); // IOerror, URLerror
         }
-
-        Toast.makeText(getContext(), "らくがきしました！", Toast.LENGTH_LONG).show();
+        msg_wait_rakugaki.cancel();
+        msg_complete_rakugaki.show();
     }
 
     public void setColor(int color) {

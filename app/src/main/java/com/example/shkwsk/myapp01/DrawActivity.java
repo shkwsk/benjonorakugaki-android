@@ -7,7 +7,6 @@ import android.os.AsyncTask;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -19,9 +18,6 @@ import android.graphics.BitmapFactory;
 import java.io.*;
 import java.net.URL;
 
-import android.app.ActionBar;
-import android.app.Activity;
-
 public class DrawActivity extends AppCompatActivity {
     private DrawingView drawingView;
     private String url, post_url;
@@ -30,7 +26,6 @@ public class DrawActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_draw);
-        //requestWindowFeature(Window.FEATURE_NO_TITLE);
         System.out.println("start DrawActivity.");
 
         // サーバとの描画通信に用いるURL
@@ -81,9 +76,6 @@ public class DrawActivity extends AppCompatActivity {
     RadioGroup.OnCheckedChangeListener changeColor = new RadioGroup.OnCheckedChangeListener() {
         public void onCheckedChanged(RadioGroup group, int checkedId) {
             RadioButton radioButton = (RadioButton) findViewById(checkedId);
-//            Toast.makeText(DrawActivity.this,
-//                    "onCheckedChanged():" + radioButton.getTextColors().getDefaultColor(),
-//                    Toast.LENGTH_SHORT).show();
             drawingView.setColor(radioButton.getTextColors().getDefaultColor());
         }
     };

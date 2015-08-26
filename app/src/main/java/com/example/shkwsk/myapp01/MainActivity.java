@@ -17,14 +17,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MainActivity extends FragmentActivity implements LocationListener {
-
     private LocationManager locationManager;
+    Toast msg_search, msg_get;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         System.out.println("System start MainActivity.");
+        msg_search = Toast.makeText(getApplicationContext(), "位置情報を取得しています。", Toast.LENGTH_LONG);
+        msg_get = Toast.makeText(getApplicationContext(), "位置情報を取得しました！", Toast.LENGTH_LONG);
 
         System.out.println("onCreate()");
         // LocationManager インスタンス生成
@@ -42,7 +44,7 @@ public class MainActivity extends FragmentActivity implements LocationListener {
             startActivity(settingsIntent);
         }
         */
-        Toast.makeText(getApplicationContext(), "位置情報を取得しています。", Toast.LENGTH_LONG).show();
+        msg_search.show();
     }
 
     @Override
@@ -94,10 +96,14 @@ public class MainActivity extends FragmentActivity implements LocationListener {
     // LocationListenerインタフェース4つ
     @Override
     public void onLocationChanged(Location location) {
-        Toast.makeText(getApplicationContext(), "位置情報を取得しました！", Toast.LENGTH_LONG).show();
+        msg_search.cancel();
+        msg_get.show();
 
         JSONObject location_json = getLocationInfo(location);
         System.out.println(location_json);
+
+        msg_get.cancel();
+
         Intent intent_sb = new Intent(MainActivity.this, SelectBoardActivity.class);
         intent_sb.putExtra("location_json", location_json.toString());
         try {

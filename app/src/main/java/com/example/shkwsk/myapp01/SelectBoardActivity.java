@@ -29,16 +29,18 @@ import java.util.HashMap;
 
 public class SelectBoardActivity extends AppCompatActivity {
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
-    private final String Port = ":3000";
+    private final String Port = ":5963"; //テスト:3000, 本番:5963
     private final String URL = "http://27.120.85.147" + Port;
     private JSONArray location_list; // サーバから受け取るらくがき位置リスト
     private String board_url, post_url;
     final HashMap<String, String> marker_id = new HashMap();
+    Toast msg_please, msg_tap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_board);
+        msg_please = Toast.makeText(getApplicationContext(), "地図マーカーをタップしてね。", Toast.LENGTH_LONG);
 
         System.out.println("start SelectBoardActivity.");
         String location_str = getIntent().getExtras().getString("location_json");
@@ -49,7 +51,7 @@ public class SelectBoardActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         mapLocationList();
-        Toast.makeText(getApplicationContext(), "地図マーカーをタップしてね。", Toast.LENGTH_LONG).show();
+        msg_please.show();
     }
 
     @Override
@@ -158,7 +160,8 @@ public class SelectBoardActivity extends AppCompatActivity {
                     @Override
                     public boolean onMarkerClick(Marker marker) {
                         System.out.println("OnMarkerClick is started.");
-                        Toast.makeText(getApplicationContext(), marker.getTitle() + "が選択されました。", Toast.LENGTH_LONG).show();
+                        msg_tap = Toast.makeText(getApplicationContext(), marker.getTitle() + "が選択されました。", Toast.LENGTH_LONG);
+                        msg_tap.show();
                         connectBoard(marker);
                         return false;
                     }
