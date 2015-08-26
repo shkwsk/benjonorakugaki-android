@@ -11,6 +11,7 @@ import android.graphics.Bitmap.CompressFormat;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.AttributeSet;
+import android.util.Pair;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
@@ -26,10 +27,14 @@ import org.apache.http.message.BasicNameValuePair;
 public class DrawingView extends View {
     private float posx = 0f; //イベントが起きたX座標
     private float posy = 0f; //イベントが起きたY座標
-    private Path path = null; //パス
+    private Path path = null; //描画パス
+    ArrayList<Path> drawList = new ArrayList<Path>();
+    ArrayList<String> XYs;
+    HashMap<Path, ArrayList<String>> drawXYs = new HashMap<>();
     private Bitmap bmp = null; //Viewの状態を保存するためのBitmap
     private Paint paint;
     private int color = Color.RED;
+    HashMap<Path, Integer> drawColor = new HashMap<>();
     private boolean DRAWING = false;
     Toast msg_please_rakugaki = Toast.makeText(getContext(), "何からくがきしてみてください。", Toast.LENGTH_LONG);
     Toast msg_wait_rakugaki = Toast.makeText(getContext(), "らくがきしています…", Toast.LENGTH_LONG);
@@ -42,16 +47,21 @@ public class DrawingView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if(bmp != null){
-            canvas.drawBitmap(bmp, 0, 0, null);
-        }
+//        if(bmp != null){
+//            canvas.drawBitmap(bmp, 0, 0, null);
+//        }
         paint = new Paint();
-        paint.setColor(color);
         paint.setStyle(Paint.Style.STROKE);
         paint.setAntiAlias(true);
         paint.setStrokeWidth(6);
         paint.setStrokeCap(Paint.Cap.ROUND);
         paint.setStrokeJoin(Paint.Join.ROUND);
+        // 保持していたパスをキャンバスに描画
+        for (int i = 0; i < drawList.size(); i++) {
+            paint.setColor(drawColor.get(drawList.get(i)));
+            canvas.drawPath(drawList.get(i), paint);
+        }
+        paint.setColor(color);
         if(path != null){
             canvas.drawPath(path, paint);
         }
@@ -64,22 +74,33 @@ public class DrawingView extends View {
         switch(e.getAction()){
             case MotionEvent.ACTION_DOWN: //最初のポイント
                 this.path = new Path();
+                this.XYs = new ArrayList<>();
                 posx = e.getX();
                 posy = e.getY();
-                this.path.moveTo(e.getX(), e.getY());
+                this.path.moveTo(posx, posy);
+                this.XYs.add(String.valueOf(posx) + ' ' + String.valueOf(posy));
                 break;
             case MotionEvent.ACTION_MOVE: //途中のポイント
                 posx += (e.getX()-posx)/1.4;
                 posy += (e.getY()-posy)/1.4;
                 this.path.lineTo(posx, posy);
+                this.XYs.add(String.valueOf(posx) + ' ' + String.valueOf(posy));
                 invalidate();
                 break;
             case MotionEvent.ACTION_UP: //最後のポイント
-                this.path.lineTo(e.getX(), e.getY());
+                posx = e.getX();
+                posy = e.getY();
+                this.path.lineTo(posx, posy);
+                drawList.add(path); // 描画パス保持
+                this.XYs.add(String.valueOf(posx) +' '+ String.valueOf(posy));
+                this.drawXYs.put(this.path, this.XYs);
+                this.drawColor.put(this.path, this.color);
+                System.out.println(getResources().getDisplayMetrics().density);
+                System.out.println(this.path.toString() +'\n'+ this.XYs);
                 //キャッシュの中からキャプチャを作成するので、その一瞬の為にキャッシュをON
-                setDrawingCacheEnabled(true);
-                bmp = Bitmap.createBitmap(getDrawingCache());
-                setDrawingCacheEnabled(false);
+//                setDrawingCacheEnabled(true);
+//                bmp = Bitmap.createBitmap(getDrawingCache());
+//                setDrawingCacheEnabled(false);
                 invalidate();
                 break;
             default:
@@ -88,10 +109,16 @@ public class DrawingView extends View {
         return true;
     }
 
-//    public void delete() {
-//        this.path.reset();
-//        invalidate();
-//    }
+    public void undo() {
+        System.out.println("undo");
+        if (!this.drawList.isEmpty()) {
+            Path undo_path = this.drawList.remove(drawList.size() - 1);
+            this.drawColor.remove(undo_path);
+            this.drawXYs.remove(undo_path);
+            this.path.reset();
+            invalidate();
+        }
+    }
 
     public void commit(File dir, String url) {
         if (!DRAWING) {

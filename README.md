@@ -1,4 +1,8 @@
 # benjonorakugaki-android
+### Version 0.1.3
+- 描画をbitmapからpath形式で扱うようにした。
+- 各pathの色・点をリストで保持することで、「もどる」ボタン実装。
+
 ### Version 0.1.2
 - ポート番号を本番環境へ移行。
 - Toastメッセージのタイミング調整。

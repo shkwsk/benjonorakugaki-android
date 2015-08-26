@@ -160,6 +160,7 @@ public class SelectBoardActivity extends AppCompatActivity {
                     @Override
                     public boolean onMarkerClick(Marker marker) {
                         System.out.println("OnMarkerClick is started.");
+                        msg_please.cancel();
                         msg_tap = Toast.makeText(getApplicationContext(), marker.getTitle() + "が選択されました。", Toast.LENGTH_LONG);
                         msg_tap.show();
                         connectBoard(marker);

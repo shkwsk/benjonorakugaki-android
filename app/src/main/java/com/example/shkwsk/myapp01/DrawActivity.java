@@ -21,6 +21,7 @@ import java.net.URL;
 public class DrawActivity extends AppCompatActivity {
     private DrawingView drawingView;
     private String url, post_url;
+    private int vHeight, vWidth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +71,7 @@ public class DrawActivity extends AppCompatActivity {
 
         // 下部ボタンの振る舞い設定
         findViewById(R.id.commit_button).setOnClickListener(commitDrawing);
-        //findViewById(R.id.delete_button).setOnClickListener(deleteDrawing);
+        findViewById(R.id.undo_button).setOnClickListener(undo);
     }
 
     RadioGroup.OnCheckedChangeListener changeColor = new RadioGroup.OnCheckedChangeListener() {
@@ -85,12 +86,21 @@ public class DrawActivity extends AppCompatActivity {
             drawingView.commit(getCacheDir(), post_url);
         }
     };
-//    View.OnClickListener deleteDrawing = new View.OnClickListener() {
-//        @Override
-//        public void onClick(View view) {
-//            drawingView.delete();
-//        }
-//    };
+    View.OnClickListener undo = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            drawingView.undo();
+        }
+    };
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        // 描画画面の縦横サイズを取得
+        vHeight = drawingView.getHeight();
+        vWidth = drawingView.getWidth();
+        System.out.println("ビューサイズ 縦:" + drawingView.getHeight() + "横:" + drawingView.getWidth());
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
