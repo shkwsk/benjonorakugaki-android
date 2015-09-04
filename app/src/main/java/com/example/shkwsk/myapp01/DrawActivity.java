@@ -99,6 +99,7 @@ public class DrawActivity extends AppCompatActivity {
         // 描画画面の縦横サイズを取得
         vHeight = drawingView.getHeight();
         vWidth = drawingView.getWidth();
+        drawingView.setViewSize(vHeight, vWidth);
         System.out.println("ビューサイズ 縦:" + drawingView.getHeight() + "横:" + drawingView.getWidth());
     }
 

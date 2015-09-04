@@ -1,28 +1,30 @@
 package com.example.shkwsk.myapp01;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.CompressFormat;
-
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.util.AttributeSet;
-import android.util.Pair;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
-import java.io.*;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.*;
-import java.net.URL;
+import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+
+import java.io.File;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class DrawingView extends View {
     private float posx = 0f; //イベントが起きたX座標
@@ -35,7 +37,7 @@ public class DrawingView extends View {
     private Paint paint;
     private int color = Color.RED;
     HashMap<Path, Integer> drawColor = new HashMap<>();
-    private boolean DRAWING = false;
+    private int height, width;
     Toast msg_please_rakugaki = Toast.makeText(getContext(), "何からくがきしてみてください。", Toast.LENGTH_LONG);
     Toast msg_wait_rakugaki = Toast.makeText(getContext(), "らくがきしています…", Toast.LENGTH_LONG);
     Toast msg_complete_rakugaki = Toast.makeText(getContext(), "らくがきしました！", Toast.LENGTH_LONG);
@@ -69,7 +71,6 @@ public class DrawingView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent e) {
-        DRAWING = true;
         //イベントのタイプごとに処理を設定
         switch(e.getAction()){
             case MotionEvent.ACTION_DOWN: //最初のポイント
@@ -121,40 +122,41 @@ public class DrawingView extends View {
     }
 
     public void commit(File dir, String url) {
-        if (!DRAWING) {
+        if (drawList.isEmpty()) {
             msg_please_rakugaki.show();
             return;
         }
         msg_wait_rakugaki.show();
         System.out.println("commit");
-        File ext_file = new File(Environment.getExternalStorageDirectory().getPath()+"/drawbm/");
-        try{
-            if(!ext_file.exists()){
-                ext_file.mkdir();
-            }
-        }catch(SecurityException e){}
-        String image_path = "tmp.png";
 
-        //File tmp_file = new File(ext_file, image_path); //テスト
-        File tmp_file = new File(dir, image_path); //本番
-        // 描画画像保存
-        //Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.id.drawing_view);
-        System.out.println(tmp_file);
+        // POST通信準備
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost post = new HttpPost(url);
+
+        // 情報付与
+        ArrayList <NameValuePair> params = new ArrayList<>();
+        params.add( new BasicNameValuePair("height", String.valueOf(height)) );
+        params.add( new BasicNameValuePair("width", String.valueOf(width)) );
+        for (int i = 0; i < drawList.size(); i++) {
+            Path path = drawList.get(i);
+            ArrayList<String> points = drawXYs.get(path);
+            points.add(0, String.valueOf(drawColor.get(path)));
+            //System.out.println(points.toString());
+            params.add(new BasicNameValuePair("path"+String.valueOf(i), points.toString()));
+        }
+        System.out.println(url);
+        System.out.println(params);
+
+        // 通信結果
+        HttpResponse res = null;
         try {
-            FileOutputStream fos = new FileOutputStream(tmp_file);
-            //PNG形式で出力
-            Bitmap resizedBitmap = Bitmap.createScaledBitmap(bmp, 480, 640, false); // 何も描画していないとエラーで落ちる
-            resizedBitmap.compress(CompressFormat.PNG, 100, fos);
-            fos.flush();
-            fos.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+            post.setEntity(new UrlEncodedFormEntity(params, "utf-8"));
+            res = httpClient.execute(post);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println(bmp);
 
-        // 描画画面の背景画像設定
+        // 一時的に保存した画像をサーバにPOST
         try {
             System.out.println("DrawActivity: " + url);
             // サブスレッドで実行するタスクを作成
@@ -183,7 +185,7 @@ public class DrawingView extends View {
                 }
             };
             //task.execute(url, ext_file.toString(), image_path); //テスト
-            task.execute(url, dir.toString(), image_path); //本番
+            //task.execute(url, dir.toString(), image_path); //本番
         } catch (Exception e) {
             System.out.println(e); // IOerror, URLerror
         }
@@ -194,5 +196,10 @@ public class DrawingView extends View {
     public void setColor(int color) {
         System.out.println("color:"+ color);
         this.color = color;
+    }
+
+    public void setViewSize(int h, int w) {
+        this.height = h;
+        this.width = w;
     }
 }

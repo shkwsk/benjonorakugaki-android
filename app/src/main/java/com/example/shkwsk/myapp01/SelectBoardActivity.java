@@ -130,11 +130,18 @@ public class SelectBoardActivity extends AppCompatActivity {
             // Try to obtain the map from the SupportMapFragment.
             mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
                     .getMap();
-        }// else { System.exit(1); }
+        } else { System.exit(1); }
 
-        // 豊橋技術科学大学周辺を表示
-        CameraUpdate cu = CameraUpdateFactory.newLatLngZoom(new LatLng(34.701983, 137.408691), 17);
-        mMap.moveCamera(cu);
+        // 最近傍スポットの周辺を表示
+        try {
+            JSONObject nearest_spot = location_list.getJSONObject(0);
+            double nlat = Double.parseDouble(nearest_spot.get("lat").toString());
+            double nlon = Double.parseDouble(nearest_spot.get("lon").toString());
+            CameraUpdate cu = CameraUpdateFactory.newLatLngZoom(new LatLng(nlat, nlon), 17);
+            mMap.moveCamera(cu);
+        } catch (JSONException e) {
+            // JSONError
+        }
 
         // 現在地表示
         mMap.setMyLocationEnabled(true);
