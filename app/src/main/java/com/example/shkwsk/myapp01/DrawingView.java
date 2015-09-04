@@ -6,7 +6,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.os.AsyncTask;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,23 +13,21 @@ import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
 import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class DrawingView extends View {
     private float posx = 0f; //イベントが起きたX座標
     private float posy = 0f; //イベントが起きたY座標
     private Path path = null; //描画パス
     ArrayList<Path> drawList = new ArrayList<Path>();
+    ArrayList<Path> drewList = new ArrayList<Path>(); // POST済パスリスト
     ArrayList<String> XYs;
     HashMap<Path, ArrayList<String>> drawXYs = new HashMap<>();
     private Bitmap bmp = null; //Viewの状態を保存するためのBitmap
@@ -38,9 +35,9 @@ public class DrawingView extends View {
     private int color = Color.RED;
     HashMap<Path, Integer> drawColor = new HashMap<>();
     private int height, width;
-    Toast msg_please_rakugaki = Toast.makeText(getContext(), "何からくがきしてみてください。", Toast.LENGTH_LONG);
-    Toast msg_wait_rakugaki = Toast.makeText(getContext(), "らくがきしています…", Toast.LENGTH_LONG);
-    Toast msg_complete_rakugaki = Toast.makeText(getContext(), "らくがきしました！", Toast.LENGTH_LONG);
+    Toast msg_please_rakugaki = Toast.makeText(getContext(), "何からくがきしてみてください。", Toast.LENGTH_SHORT);
+    Toast msg_wait_rakugaki = Toast.makeText(getContext(), "らくがきしています…", Toast.LENGTH_SHORT);
+    Toast msg_complete_rakugaki = Toast.makeText(getContext(), "らくがきしました！", Toast.LENGTH_SHORT);
 
     public DrawingView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -93,10 +90,10 @@ public class DrawingView extends View {
                 posy = e.getY();
                 this.path.lineTo(posx, posy);
                 drawList.add(path); // 描画パス保持
-                this.XYs.add(String.valueOf(posx) +' '+ String.valueOf(posy));
+                this.XYs.add(String.valueOf(posx) + ' ' + String.valueOf(posy));
                 this.drawXYs.put(this.path, this.XYs);
                 this.drawColor.put(this.path, this.color);
-                System.out.println(getResources().getDisplayMetrics().density);
+                //System.out.println(getResources().getDisplayMetrics().density);
                 System.out.println(this.path.toString() +'\n'+ this.XYs);
                 //キャッシュの中からキャプチャを作成するので、その一瞬の為にキャッシュをON
 //                setDrawingCacheEnabled(true);
@@ -114,6 +111,7 @@ public class DrawingView extends View {
         System.out.println("undo");
         if (!this.drawList.isEmpty()) {
             Path undo_path = this.drawList.remove(drawList.size() - 1);
+            this.drewList.remove(undo_path);
             this.drawColor.remove(undo_path);
             this.drawXYs.remove(undo_path);
             this.path.reset();
@@ -121,74 +119,71 @@ public class DrawingView extends View {
         }
     }
 
-    public void commit(File dir, String url) {
+    public void commit(File dir, final String url) {
+        System.out.println("commit");
         if (drawList.isEmpty()) {
             msg_please_rakugaki.show();
             return;
         }
         msg_wait_rakugaki.show();
-        System.out.println("commit");
 
-        // POST通信準備
-        HttpClient httpClient = new DefaultHttpClient();
-        HttpPost post = new HttpPost(url);
-
-        // 情報付与
-        ArrayList <NameValuePair> params = new ArrayList<>();
-        params.add( new BasicNameValuePair("height", String.valueOf(height)) );
-        params.add( new BasicNameValuePair("width", String.valueOf(width)) );
+        // POSTするパス情報を作成
+        final ArrayList <NameValuePair> params = new ArrayList<>();
         for (int i = 0; i < drawList.size(); i++) {
             Path path = drawList.get(i);
+            if (drewList.contains(path)) { continue; }
             ArrayList<String> points = drawXYs.get(path);
             points.add(0, String.valueOf(drawColor.get(path)));
             //System.out.println(points.toString());
-            params.add(new BasicNameValuePair("path"+String.valueOf(i), points.toString()));
+            params.add(new BasicNameValuePair("path" + String.valueOf(params.size()), points.toString()));
+            points.remove(0); // paramに追加したら、色情報を座標リストから除去
+            drewList.add(path); // paramに追加したら、描画済みリストに格納
         }
+        // 新たなパスを描画せずに「らくがき！」したときは送信しない
+        if (params.isEmpty()) {
+            msg_wait_rakugaki.cancel();
+            msg_please_rakugaki.show();
+            return;
+        }
+        params.add(new BasicNameValuePair("height", String.valueOf(height)));
+        params.add(new BasicNameValuePair("width", String.valueOf(width)));
+
         System.out.println(url);
         System.out.println(params);
 
-        // 通信結果
-        HttpResponse res = null;
+        // 通信
+        Thread th_http;
+        th_http = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // POST通信準備
+                DefaultHttpClient httpClient = new DefaultHttpClient();
+                HttpPost post = new HttpPost(url);
+                try {
+                    post.setEntity(new UrlEncodedFormEntity(params, "utf-8"));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println(e);
+                }
+                // POST通信
+                HttpResponse res = null;
+                try {
+                    res = httpClient.execute(post);
+                    System.out.println("response:" + res);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("Exception!");
+                }
+            }
+        });
+        th_http.start();
+        // スレッドの終了を待つ
         try {
-            post.setEntity(new UrlEncodedFormEntity(params, "utf-8"));
-            res = httpClient.execute(post);
-        } catch (Exception e) {
-            e.printStackTrace();
+            th_http.join();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
 
-        // 一時的に保存した画像をサーバにPOST
-        try {
-            System.out.println("DrawActivity: " + url);
-            // サブスレッドで実行するタスクを作成
-            AsyncTask<String, Void, Boolean> task = new AsyncTask<String, Void, Boolean>() {
-                @Override
-                protected Boolean doInBackground(String... params) {
-                    try {
-                        URL post_url = new URL(params[0]);
-                        System.out.println("post to:" + post_url);
-                        File tmp_file = new File(params[1], params[2]);
-                        List<NameValuePair> postData = new ArrayList<>();
-                        NameValuePair nv = new BasicNameValuePair("comment", "この写真はxxで撮りました。");
-                        postData.add(nv);
-                        HttpMultipartSender request = new HttpMultipartSender(
-                                post_url.toString(),
-                                postData,
-                                "image",
-                                tmp_file.toString());
-                        String response = request.send();
-                        System.out.println(response);
-                        return true;
-                    } catch (Exception e) {
-                        System.out.println(e);
-                        return false;
-                    }
-                }
-            };
-            //task.execute(url, ext_file.toString(), image_path); //テスト
-            //task.execute(url, dir.toString(), image_path); //本番
-        } catch (Exception e) {
-            System.out.println(e); // IOerror, URLerror
-        }
         msg_wait_rakugaki.cancel();
         msg_complete_rakugaki.show();
     }

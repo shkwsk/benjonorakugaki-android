@@ -1,4 +1,9 @@
 # benjonorakugaki-android
+### Version 0.1.5
+- Mod: Toastの表示時間を短くした
+- Add: POST済の描画パスリスト drewList
+- Add: POST通信処理
+
 ### Version 0.1.4
 - 描画画面の縦・横サイズ取得。
 - 描画パス・色・座標をPOST形式に変換。

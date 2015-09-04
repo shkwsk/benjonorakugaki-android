@@ -40,7 +40,7 @@ public class SelectBoardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_board);
-        msg_please = Toast.makeText(getApplicationContext(), "地図マーカーをタップしてね。", Toast.LENGTH_LONG);
+        msg_please = Toast.makeText(getApplicationContext(), "地図マーカーをタップしてね。", Toast.LENGTH_SHORT);
 
         System.out.println("start SelectBoardActivity.");
         String location_str = getIntent().getExtras().getString("location_json");

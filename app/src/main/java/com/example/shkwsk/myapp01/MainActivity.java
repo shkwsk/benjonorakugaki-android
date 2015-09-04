@@ -25,8 +25,8 @@ public class MainActivity extends FragmentActivity implements LocationListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         System.out.println("System start MainActivity.");
-        msg_search = Toast.makeText(getApplicationContext(), "位置情報を取得しています。", Toast.LENGTH_LONG);
-        msg_get = Toast.makeText(getApplicationContext(), "位置情報を取得しました！", Toast.LENGTH_LONG);
+        msg_search = Toast.makeText(getApplicationContext(), "位置情報を取得しています。", Toast.LENGTH_SHORT);
+        msg_get = Toast.makeText(getApplicationContext(), "位置情報を取得しました！", Toast.LENGTH_SHORT);
 
         System.out.println("onCreate()");
         // LocationManager インスタンス生成
