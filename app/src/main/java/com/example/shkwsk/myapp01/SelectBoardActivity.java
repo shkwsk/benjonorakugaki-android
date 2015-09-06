@@ -29,8 +29,8 @@ import java.util.HashMap;
 
 public class SelectBoardActivity extends AppCompatActivity {
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
-    private final String Port = ":3000"; //テスト:3000, 本番:5963
-    private final String URL = "http://192.168.1.10" + Port;
+    private final String Port = ":5963"; //テスト:3000, 本番:5963
+    private final String URL = "http://27.120.85.147" + Port;
     private JSONArray location_list; // サーバから受け取るらくがき位置リスト
     private String board_url, post_url;
     final HashMap<String, String> marker_id = new HashMap();

@@ -1,4 +1,8 @@
 # benjonorakugaki-android
+### Version 0.1.6
+- Mod: サーバからのレスポンスがバイナリの直接送信に変更。これに対応する修正。
+- Mod: .gitignoreにAndroid Studioの自動生成ファイル群を追加
+
 ### Version 0.1.5
 - Mod: Toastの表示時間を短くした
 - Add: POST済の描画パスリスト drewList
