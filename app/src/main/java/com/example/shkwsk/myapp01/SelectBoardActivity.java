@@ -180,37 +180,10 @@ public class SelectBoardActivity extends AppCompatActivity {
         // 位置IDをサーバに送る。
         final String query = URL + "/api/v1/board/?" + "id=" + marker_id.get(marker.getId());
         System.out.println(query);
-        Thread th_sendID = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                System.out.println("Thread run.");
-                try {
-                    HttpClient httpClient = new DefaultHttpClient();
-                    // リクエスト送信
-                    HttpGet httpGet = new HttpGet(query);
-                    // 取得
-                    HttpResponse httpResponse = httpClient.execute(httpGet);
-                    System.out.println("Response succeeded!");
-                    String res = EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
-                    String board_image = new JSONObject(res).get("board_image").toString();
-                    board_url = new JSONObject(board_image).get("url").toString();
-                    System.out.println(URL + board_url);
-                } catch (Exception ex) {
-                    System.out.println(ex);
-                }
-                System.out.println("Thread end.");
-            }
-        });
-        th_sendID.start();
-        // スレッドの終了を待つ
-        try {
-            th_sendID.join();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+
         // 描画画面へ遷移
         final Intent intent_draw = new Intent(SelectBoardActivity.this, DrawActivity.class);
-        intent_draw.putExtra("url", URL + board_url);
+        intent_draw.putExtra("url", query);
         intent_draw.putExtra("query", query);
         try {
             startActivity(intent_draw);
