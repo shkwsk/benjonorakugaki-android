@@ -113,7 +113,7 @@ public class SelectBoardActivity extends AppCompatActivity {
                     System.out.println("Response succeeded!");
                     location_list = new JSONArray(res);
                 } catch (Exception e) {
-                    System.out.println(e);
+                    System.out.println(e.toString());
                 }
             }
         });
