@@ -2,6 +2,7 @@ package com.example.shkwsk.myapp01;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -51,9 +52,13 @@ public class MainActivity extends FragmentActivity implements LocationListener {
     protected void onResume() {
         System.out.println("onResume()");
         if (locationManager != null) {
-            // minTime = 1000msec, minDistance = 50m
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 50, this);
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 50, this);
+            try {
+                // minTime = 1000msec, minDistance = 50m
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 50, this);
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 50, this);
+            }catch (IllegalArgumentException e){
+                Log.e("location", e.getMessage());
+            }
         } else {
             System.out.println("locationManager=null\n");
         }

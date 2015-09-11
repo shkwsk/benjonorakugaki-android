@@ -1,8 +1,10 @@
 package com.example.shkwsk.myapp01;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -29,8 +31,8 @@ import java.util.HashMap;
 
 public class SelectBoardActivity extends AppCompatActivity {
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
-    private final String Port = ":5963"; //テスト:3000, 本番:5963
-    private final String URL = "http://27.120.85.147" + Port;
+    private final String Port = String.format(":%s", "3000"); //テスト:3000, 本番:5963
+    private final String URL = String.format("http://%s%s", "192.168.1.30", Port);
     private JSONArray location_list; // サーバから受け取るらくがき位置リスト
     private String board_url, post_url;
     final HashMap<String, String> marker_id = new HashMap();
@@ -89,6 +91,7 @@ public class SelectBoardActivity extends AppCompatActivity {
                             "lat=" + location_info.get("Lat") + "&" +
                             "lon=" + location_info.get("Lon") + "&" +
                             "acc=" + location_info.get("Acc");
+                    Log.i("url-check", URL);
                 } catch (JSONException ex) {
                     // エラー処理
                 }
