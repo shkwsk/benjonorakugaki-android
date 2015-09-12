@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
@@ -35,6 +36,7 @@ public class DrawingView extends View {
     private int color = Color.RED;
     HashMap<Path, Integer> drawColor = new HashMap<>();
     private int height, width;
+    private double ratio;
     Toast msg_please_rakugaki = Toast.makeText(getContext(), "何からくがきしてみてください。", Toast.LENGTH_SHORT);
     Toast msg_wait_rakugaki = Toast.makeText(getContext(), "らくがきしています…", Toast.LENGTH_SHORT);
     Toast msg_complete_rakugaki = Toast.makeText(getContext(), "らくがきしました！", Toast.LENGTH_SHORT);
@@ -52,7 +54,7 @@ public class DrawingView extends View {
         paint = new Paint();
         paint.setStyle(Paint.Style.STROKE);
         paint.setAntiAlias(true);
-        paint.setStrokeWidth(6);
+        paint.setStrokeWidth((float) (6*ratio));
         paint.setStrokeCap(Paint.Cap.ROUND);
         paint.setStrokeJoin(Paint.Join.ROUND);
         // 保持していたパスをキャンバスに描画
@@ -196,5 +198,6 @@ public class DrawingView extends View {
     public void setViewSize(int h, int w) {
         this.height = h;
         this.width = w;
+        this.ratio = (this.width + this.height)/(480.0 + 640.0);
     }
 }
