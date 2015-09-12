@@ -1,4 +1,8 @@
 # benjonorakugaki-android
+### Version 0.1.7
+- Mod: 機種の解像度によって線幅が異なるのを修正
+- Add: デバッグ用の構成(flavor)を追加
+
 ### Version 0.1.6
 - Mod: サーバからのレスポンスがバイナリの直接送信に変更。これに対応する修正。
 - Mod: .gitignoreにAndroid Studioの自動生成ファイル群を追加

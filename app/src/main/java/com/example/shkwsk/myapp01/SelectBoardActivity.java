@@ -1,8 +1,10 @@
 package com.example.shkwsk.myapp01;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -29,9 +31,8 @@ import java.util.HashMap;
 
 public class SelectBoardActivity extends AppCompatActivity {
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
-    private final String Port = ":5963"; //テスト:3000, 本番:5963
-    private final String URL = "http://27.120.85.147" + Port;
     private JSONArray location_list; // サーバから受け取るらくがき位置リスト
+    private String URL;
     private String board_url, post_url;
     final HashMap<String, String> marker_id = new HashMap();
     Toast msg_please, msg_tap;
@@ -39,6 +40,8 @@ public class SelectBoardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        String Port = String.format(":%s", getText(R.string.port)); //テスト:3000, 本番:5963
+        URL = String.format("http://%s%s", getText(R.string.address), Port);
         setContentView(R.layout.activity_select_board);
         msg_please = Toast.makeText(getApplicationContext(), "地図マーカーをタップしてね。", Toast.LENGTH_SHORT);
 
@@ -110,7 +113,7 @@ public class SelectBoardActivity extends AppCompatActivity {
                     System.out.println("Response succeeded!");
                     location_list = new JSONArray(res);
                 } catch (Exception e) {
-                    System.out.println(e);
+                    System.out.println(e.toString());
                 }
             }
         });
