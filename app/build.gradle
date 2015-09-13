@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 
 def PACKAGE_NAME = "com.example.shkwsk.myapp01"
+def MASTER_PACKAGE_NAME = "jp.gr.java_conf.wcgraffiti.virtualrakugaki"
 
 android {
     compileSdkVersion 22
@@ -23,7 +24,7 @@ android {
             applicationId "${PACKAGE_NAME}.develop"
         }
         master {
-
+            applicationId "${MASTER_PACKAGE_NAME}.master"
         }
     }
 }

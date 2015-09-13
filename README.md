@@ -1,4 +1,8 @@
 # benjonorakugaki-android
+### Version 0.1.8
+- Mod: masterRelease時はパッケージ名を変更するよう設定
+- Mod: .gitignoreにkeystoreファイルを追加
+
 ### Version 0.1.7
 - Mod: 機種の解像度によって線幅が異なるのを修正
 - Add: デバッグ用の構成(flavor)を追加

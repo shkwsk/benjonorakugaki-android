@@ -1,6 +1,9 @@
 # Created by https://www.gitignore.io/api/android,windows,linux,osx,intellij
 
 ### Android ###
+# keystore file
+*.keystore
+
 # Built application files
 *.apk
 *.ap_
