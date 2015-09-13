@@ -1,5 +1,6 @@
 # benjonorakugaki-android
 ### Version 0.1.8
+- Mod: 不要な権限を削除
 - Mod: masterRelease時はパッケージ名を変更するよう設定
 - Mod: .gitignoreにkeystoreファイルを追加
 
