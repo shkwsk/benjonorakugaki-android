@@ -16,9 +16,11 @@ import android.provider.Settings;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import java.util.UUID;
 
 public class MainActivity extends FragmentActivity implements LocationListener {
     private LocationManager locationManager;
+    String my_uuid;
     Toast msg_search, msg_get;
 
     @Override
@@ -26,6 +28,9 @@ public class MainActivity extends FragmentActivity implements LocationListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         System.out.println("System start MainActivity.");
+
+        my_uuid = UUID.randomUUID().toString();
+
         msg_search = Toast.makeText(getApplicationContext(), "位置情報を取得しています。", Toast.LENGTH_SHORT);
         msg_get = Toast.makeText(getApplicationContext(), "位置情報を取得しました！", Toast.LENGTH_SHORT);
 
