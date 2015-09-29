@@ -2,26 +2,14 @@ package com.example.shkwsk.myapp01;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 import android.content.Intent;
 
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.location.LocationProvider;
-import android.provider.Settings;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 import java.util.UUID;
 
-public class MainActivity extends FragmentActivity implements LocationListener {
-    private LocationManager locationManager;
-    String my_uuid;
-    Toast msg_search, msg_get;
+public class MainActivity extends FragmentActivity {
+    String uuid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,56 +17,17 @@ public class MainActivity extends FragmentActivity implements LocationListener {
         setContentView(R.layout.activity_main);
         System.out.println("System start MainActivity.");
 
-        my_uuid = UUID.randomUUID().toString();
+        uuid = UUID.randomUUID().toString();
+        System.out.println(uuid);
 
-        msg_search = Toast.makeText(getApplicationContext(), "位置情報を取得しています。", Toast.LENGTH_SHORT);
-        msg_get = Toast.makeText(getApplicationContext(), "位置情報を取得しました！", Toast.LENGTH_SHORT);
-
-        System.out.println("onCreate()");
-        // LocationManager インスタンス生成
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-
-        final boolean gpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        // final boolean wifiEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-        if (!gpsEnabled) {
-            Intent settingsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-            startActivity(settingsIntent);
+        Intent intent_sb = new Intent(MainActivity.this, SelectBoardActivity.class);
+        intent_sb.putExtra("uuid", uuid);
+        try {
+            startActivity(intent_sb);
+        } catch (Exception ex) {
+            System.out.println(ex);
         }
-        /*
-        else if (!wifiEnabled) {
-            Intent settingsIntent = new Intent(Settings.ACTION_WIFI_SETTINGS);
-            startActivity(settingsIntent);
-        }
-        */
-        msg_search.show();
-    }
-
-    @Override
-    protected void onResume() {
-        System.out.println("onResume()");
-        if (locationManager != null) {
-            try {
-                // minTime = 1000msec, minDistance = 50m
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 50, this);
-                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 50, this);
-            }catch (IllegalArgumentException e){
-                Log.e("location", e.getMessage());
-            }
-        } else {
-            System.out.println("locationManager=null\n");
-        }
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        if (locationManager != null) {
-            // update を止める
-            locationManager.removeUpdates(this);
-        } else {
-            System.out.println("onPause()");
-        }
-        super.onPause();
+        MainActivity.this.finish(); // タイトル画面にはもう戻らない
     }
 
     @Override
@@ -101,64 +50,5 @@ public class MainActivity extends FragmentActivity implements LocationListener {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    // LocationListenerインタフェース4つ
-    @Override
-    public void onLocationChanged(Location location) {
-        msg_search.cancel();
-        msg_get.show();
-
-        JSONObject location_json = getLocationInfo(location);
-        System.out.println(location_json);
-
-        msg_get.cancel();
-
-        Intent intent_sb = new Intent(MainActivity.this, SelectBoardActivity.class);
-        intent_sb.putExtra("location_json", location_json.toString());
-        try {
-            startActivity(intent_sb);
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
-        MainActivity.this.finish(); // タイトル画面にはもう戻らない
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-        switch (status) {
-            case LocationProvider.AVAILABLE:
-                System.out.println("LocationProvider.AVAILABLE\n");
-                break;
-            case LocationProvider.OUT_OF_SERVICE:
-                System.out.println("LocationProvider.OUT_OF_SERVICE\n");
-                break;
-            case LocationProvider.TEMPORARILY_UNAVAILABLE:
-                System.out.println("LocationProvider.UNAVAILABLE\n");
-                break;
-        }
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-    }
-
-    // private method
-    private JSONObject getLocationInfo(Location location) {
-        JSONObject location_info = new JSONObject();
-        location.getLatitude();
-        try {
-            location_info.put("Lat", String.valueOf(location.getLatitude()));
-            location_info.put("Lon", String.valueOf(location.getLongitude()));
-            location_info.put("Acc", String.valueOf(location.getAccuracy()));
-            //location_info.put("Latitude", location.getAltitude());
-        } catch (JSONException e) {
-            System.out.println("Please check key-value pairs.");
-        }
-        return location_info;
     }
 }
