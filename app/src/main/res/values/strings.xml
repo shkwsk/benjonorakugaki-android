@@ -7,6 +7,7 @@
     <string name="title_activity_select">SelectActivity</string>
     <string name="title_activity_draw">DrawActivity</string>
     <string name="title_activity_select_board">SelectBoardActivity</string>
+    <string name="title_activity_qrreader">QRReaderActivity</string>
 
     <string name="address">27.120.85.147</string>
     <string name="port">5963</string>
