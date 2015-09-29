@@ -1,4 +1,8 @@
 # benjonorakugaki-android
+### Version 0.2.0
+- Add: 文化祭用のフレーバー作成
+- Add: 文化祭用のポート番号設定
+
 ### Version 0.1.8 (release 1.0.1)
 - Mod: 不要な権限を削除
 - Mod: masterRelease時はパッケージ名を変更するよう設定

@@ -26,11 +26,14 @@ android {
         master {
             applicationId "${MASTER_PACKAGE_NAME}.master"
         }
+        fest {
+            applicationId "${MASTER_PACKAGE_NAME}.fest"
+        }
     }
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.2.1'
     compile 'com.google.android.gms:play-services-maps:7.5.0'
 }
