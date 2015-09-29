@@ -1,4 +1,8 @@
 # benjonorakugaki-android
+### Version 0.2.1
+- New: QRReaderActivity, AppUUID
+- Fix: UUIDが起動毎に変わってしまう問題を解決。
+
 ### Version 0.2.0
 - Add: 文化祭用のフレーバー作成
 - Add: 文化祭用のポート番号設定
