@@ -1,12 +1,10 @@
 package com.example.shkwsk.myapp01;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.content.Intent;
-
-import java.util.UUID;
 
 public class MainActivity extends FragmentActivity {
     String uuid;
@@ -17,10 +15,10 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
         System.out.println("System start MainActivity.");
 
-        uuid = UUID.randomUUID().toString();
+        uuid = AppUUID.get(this);
         System.out.println(uuid);
 
-        Intent intent_sb = new Intent(MainActivity.this, SelectBoardActivity.class);
+        Intent intent_sb = new Intent(MainActivity.this, QRReaderActivity.class);
         intent_sb.putExtra("uuid", uuid);
         try {
             startActivity(intent_sb);
