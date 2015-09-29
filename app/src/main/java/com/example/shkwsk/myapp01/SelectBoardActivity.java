@@ -36,6 +36,7 @@ public class SelectBoardActivity extends AppCompatActivity {
     private String board_url, post_url;
     final HashMap<String, String> marker_id = new HashMap();
     Toast msg_please, msg_tap;
+    //
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
