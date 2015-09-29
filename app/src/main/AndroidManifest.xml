@@ -5,6 +5,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FLASHLIGHT"/>
     <!--
 The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
       Google Maps Android API v2, but are recommended.
@@ -17,7 +19,6 @@ The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
         android:icon="@drawable/virtual_rakugaki"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -31,6 +32,7 @@ The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
             android:theme="@style/AppTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -41,6 +43,10 @@ The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
         <activity
             android:name=".SelectBoardActivity"
             android:label="@string/title_activity_select_board" >
+        </activity>
+        <activity
+            android:name=".QRReaderActivity"
+            android:label="@string/title_activity_qrreader" >
         </activity>
     </application>
 
