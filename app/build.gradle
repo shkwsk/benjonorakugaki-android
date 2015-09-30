@@ -38,6 +38,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-maps:7.5.0'
     // Zxing QR Code Library
     compile 'com.google.zxing:core:3.2.1'
+    compile 'com.google.code.gson:gson:1.7.2'
 }
 
 apply plugin: 'deploygate'
