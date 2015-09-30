@@ -2,30 +2,21 @@ package com.example.shkwsk.myapp01;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends FragmentActivity {
-    String uuid;
+    private Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         System.out.println("System start MainActivity.");
-
-        uuid = AppUUID.get(this);
-        System.out.println(uuid);
-
-        Intent intent_sb = new Intent(MainActivity.this, QRReaderActivity.class);
-        intent_sb.putExtra("uuid", uuid);
-        try {
-            startActivity(intent_sb);
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
-        MainActivity.this.finish(); // タイトル画面にはもう戻らない
+        System.out.println("onCreate()");
+        handler.postDelayed(new splashHandler(), 1000);
     }
 
     @Override
@@ -48,5 +39,17 @@ public class MainActivity extends FragmentActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    class splashHandler implements Runnable {
+        public void run() {
+            Intent intent_sb = new Intent(MainActivity.this, SelectBoardActivity.class);
+            try {
+                startActivity(intent_sb);
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+            MainActivity.this.finish(); // タイトル画面にはもう戻らない
+        }
     }
 }
