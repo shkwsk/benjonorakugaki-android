@@ -52,4 +52,21 @@ public class AppPref {
         locations_flag = gson.fromJson(locations, new TypeToken<ArrayList<Boolean>>(){}.getType());
         return locations_flag;
     }
+
+    public static void setLocationFlag(Context context, String board_id) {
+        int id = Integer.parseInt(board_id) - 1;
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences(LOCATIONS_KEY, Context.MODE_PRIVATE);
+        String locations = sharedPreferences.getString(LOCATIONS_KEY, null);
+        Gson gson = new Gson();
+        if (locations == null) {// 何も設定されていない場合
+            for (int i=0; i<Integer.parseInt(context.getString(R.string.location_num)); i++ ) {
+                locations_flag.add(false);
+            }
+        }
+        locations_flag.set(id, true);
+        Editor editor = sharedPreferences.edit();
+        editor.putString(LOCATIONS_KEY, gson.toJson(locations_flag));
+        editor.commit();// 保存
+    }
 }
