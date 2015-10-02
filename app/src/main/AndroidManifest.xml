@@ -41,6 +41,10 @@ The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
             android:label="@string/title_activity_draw" >
         </activity>
         <activity
+            android:name=".ViewDrawActivity"
+            android:label="@string/title_activity_draw" >
+        </activity>
+        <activity
             android:name=".SelectBoardActivity"
             android:label="@string/title_activity_select_board" >
         </activity>
