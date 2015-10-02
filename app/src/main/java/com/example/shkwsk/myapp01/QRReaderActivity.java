@@ -1,5 +1,6 @@
 package com.example.shkwsk.myapp01;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -16,7 +17,6 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.MultiFormatReader;
@@ -37,6 +37,8 @@ public class QRReaderActivity extends AppCompatActivity {
     private SurfaceView surfaceView;
     private View rectView;
     private CameraListener cameraListener = new CameraListener();
+
+    private String url, query;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -165,10 +167,27 @@ public class QRReaderActivity extends AppCompatActivity {
             try {
                 Log.d(TAG, "decode");
                 Result result = reader.decode(bitmap);
-                String text = result.getText();
+                String board_id = result.getText();
 
-                Toast.makeText(QRReaderActivity.this, text, Toast.LENGTH_LONG).show();
-                Log.i(TAG, "result:" + text);
+                // サーバとの描画通信に用いるURL
+                url = getIntent().getExtras().getString("url");
+                query = getIntent().getExtras().getString("query");
+                query = url + "/api/v1/board/?" + "id=" + board_id;
+                System.out.println(query);
+
+                Intent intent_draw = new Intent(QRReaderActivity.this, DrawActivity.class);
+                intent_draw.putExtra("url", url);
+                intent_draw.putExtra("board_id", board_id);
+                intent_draw.putExtra("query", query);
+                try {
+                    startActivity(intent_draw);
+                } catch (Exception ex) {
+                    System.out.println(ex);
+                }
+                QRReaderActivity.this.finish();
+
+                // Toast.makeText(QRReaderActivity.this, text, Toast.LENGTH_LONG).show();
+                Log.i(TAG, "result:" + board_id);
                 camera.stopPreview();
                 camera.autoFocus(null);
             } catch (Exception e) {
