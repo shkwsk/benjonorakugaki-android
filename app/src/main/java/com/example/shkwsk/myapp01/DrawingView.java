@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
@@ -121,7 +120,7 @@ public class DrawingView extends View {
         }
     }
 
-    public void commit(File dir, final String url) {
+    public void commit(File dir, final String url, String uuid) {
         System.out.println("commit");
         if (drawList.isEmpty()) {
             msg_please_rakugaki.show();
@@ -147,6 +146,7 @@ public class DrawingView extends View {
             msg_please_rakugaki.show();
             return;
         }
+        params.add(new BasicNameValuePair("uuid", uuid));
         params.add(new BasicNameValuePair("height", String.valueOf(height)));
         params.add(new BasicNameValuePair("width", String.valueOf(width)));
 
@@ -171,7 +171,7 @@ public class DrawingView extends View {
                 HttpResponse res = null;
                 try {
                     res = httpClient.execute(post);
-                    System.out.println("response:" + res);
+                    System.out.println("response:" + res.getStatusLine().getStatusCode());
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.out.println("Exception!");

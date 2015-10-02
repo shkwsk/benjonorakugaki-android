@@ -20,8 +20,9 @@ import java.net.URL;
 
 public class DrawActivity extends AppCompatActivity {
     private DrawingView drawingView;
-    private String url, post_url;
+    private String url, board_id, query;
     private int vHeight, vWidth;
+    String uuid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +30,13 @@ public class DrawActivity extends AppCompatActivity {
         setContentView(R.layout.activity_draw);
         System.out.println("start DrawActivity.");
 
+        uuid = AppPref.getUUID(this);
+        System.out.println(uuid);
+
         // サーバとの描画通信に用いるURL
         url = getIntent().getExtras().getString("url");
-        post_url = getIntent().getExtras().getString("query");
+        board_id = getIntent().getExtras().getString("board_id");
+        query = getIntent().getExtras().getString("query");
 
         //ラジオボタンの振る舞い設定
         RadioGroup color_radiogroup = (RadioGroup)findViewById(R.id.color_radiogroup);
@@ -42,7 +47,7 @@ public class DrawActivity extends AppCompatActivity {
 
         // 描画画面の背景画像設定
         try {
-            System.out.println("DrawActivity: " + url);
+            System.out.println("DrawActivity: " + query);
             // サブスレッドで実行するタスクを作成
             AsyncTask<String, Void, Boolean> task = new AsyncTask<String, Void, Boolean>() {
                 BitmapDrawable ob;
@@ -64,7 +69,7 @@ public class DrawActivity extends AppCompatActivity {
                     drawingView.setBackground(ob);
                 }
             };
-            task.execute(url);
+            task.execute(query);
         } catch (Exception e) {
             System.out.println(e); // IOerror, URLerror
         }
@@ -83,7 +88,8 @@ public class DrawActivity extends AppCompatActivity {
     View.OnClickListener commitDrawing = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            drawingView.commit(getCacheDir(), post_url);
+            drawingView.commit(getCacheDir(), query, uuid);
+            AppPref.setLocationFlag(getApplicationContext(), board_id);
         }
     };
     View.OnClickListener undo = new View.OnClickListener() {
