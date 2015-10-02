@@ -2,5 +2,4 @@
     <string name="app_name">Virtual RAKUGAKI (Fest)</string>
 
     <string name="port">4649</string>
-    <string name="location_num">8</string>
 </resources>
