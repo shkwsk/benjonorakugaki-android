@@ -14,6 +14,7 @@ import java.util.UUID;
  */
 public class AppPref {
     private static String uuid = null;
+    private static String locations_str = null;
     private static ArrayList<Boolean> locations_flag = new ArrayList<>();
     private static final String UUID_KEY = "UUID_KEY";
     private static final String LOCATIONS_KEY = "LOCATIONS_KEY";
@@ -35,21 +36,26 @@ public class AppPref {
     }
 
     public static ArrayList<Boolean> getLocationFlag(Context context) {
-        if (!locations_flag.isEmpty()) {// 既にapp内からinvokeされている場合
+        if (locations_str != null) {// 既にapp内からinvokeされている場合
+            System.out.println("already created location_flag.");
             return locations_flag;
         }
+
         Gson gson = new Gson();
         SharedPreferences sharedPreferences = context.getSharedPreferences(LOCATIONS_KEY, Context.MODE_PRIVATE);
-        String locations = sharedPreferences.getString(LOCATIONS_KEY, null);
-        if (locations == null) {// 何も設定されていない場合
+        locations_str = sharedPreferences.getString(LOCATIONS_KEY, null);
+        if (locations_str == null) {// 何も設定されていない場合
+            System.out.println("create location_flag.");
             for (int i=0; i<Integer.parseInt(context.getString(R.string.location_num)); i++ ) {
                 locations_flag.add(false);
             }
             Editor editor = sharedPreferences.edit();
+            System.out.println(gson.toJson(locations_flag));
             editor.putString(LOCATIONS_KEY, gson.toJson(locations_flag));
             editor.commit();// 保存
+            locations_str = sharedPreferences.getString(LOCATIONS_KEY, null);
         }
-        locations_flag = gson.fromJson(locations, new TypeToken<ArrayList<Boolean>>(){}.getType());
+        locations_flag = gson.fromJson(locations_str, new TypeToken<ArrayList<Boolean>>(){}.getType());
         return locations_flag;
     }
 
