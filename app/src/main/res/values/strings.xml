@@ -8,10 +8,11 @@
     <string name="title_activity_draw">DrawActivity</string>
     <string name="title_activity_select_board">SelectBoardActivity</string>
     <string name="title_activity_qrreader">QRReaderActivity</string>
+    <string name="title_activity_congratulation">CongratulationActivity</string>
 
     <string name="address">27.120.85.147</string>
     <string name="port">5963</string>
 
-    <string name="location_num">8</string>
+    <string name="location_num">9</string>
     <string name="map_zoom">18</string>
 </resources>
