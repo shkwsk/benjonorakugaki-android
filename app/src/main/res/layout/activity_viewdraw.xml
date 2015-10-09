@@ -7,63 +7,12 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.example.shkwsk.myapp01.DrawActivity" >
+    tools:context="com.example.shkwsk.myapp01.ViewDrawActivity" >
 
-    <view
-        android:id="@+id/drawing_view"
+    <ImageView
+        android:id="@+id/view"
         android:background="@drawable/board"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        class="com.example.shkwsk.myapp01.DrawingView"
-        android:layout_above="@+id/commit_button"
-        android:layout_below="@+id/color_radiogroup" />
-
-    <Button
-        android:id="@+id/commit_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/gray2"
-        android:textColor="@color/black"
-        android:text="らくがき！"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
-    <Button
-        android:id="@+id/undo_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="もどす"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/drawing_view" />
-
-    <RadioGroup
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/color_radiogroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-        <RadioButton
-            android:id="@+id/red_radiobutton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="あか"
-            android:textColor="@color/red"
-            android:checked="true" />
-        <RadioButton
-            android:id="@+id/blue_radiobutton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="あお"
-            android:textColor="@color/blue" />
-        <RadioButton
-            android:id="@+id/green_radiobutton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="みどり"
-            android:textColor="@color/green" />
-    </RadioGroup>
+        android:layout_height="match_parent" />
 
 </RelativeLayout>

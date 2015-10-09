@@ -1,44 +1,34 @@
 package com.example.shkwsk.myapp01;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
-
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.BitmapFactory;
-
-import java.io.*;
+import java.io.InputStream;
 import java.net.URL;
 
 public class ViewDrawActivity extends AppCompatActivity {
-    private DrawingView drawingView;
+    private View view;
     private String url, post_url;
-    private int vHeight, vWidth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_draw);
-        System.out.println("start DrawActivity.");
+        setContentView(R.layout.activity_viewdraw);
+        System.out.println("start ViewDrawActivity.");
 
         // サーバとの描画通信に用いるURL
         url = getIntent().getExtras().getString("url");
         post_url = getIntent().getExtras().getString("query");
 
-        //ラジオボタンの振る舞い設定
-        RadioGroup color_radiogroup = (RadioGroup)findViewById(R.id.color_radiogroup);
-        color_radiogroup.setOnCheckedChangeListener(changeColor);
-
         // 描画画面の振る舞い設定
-        this.drawingView = (DrawingView)findViewById(R.id.drawing_view);
+        this.view = findViewById(R.id.view);
 
         // 描画画面の背景画像設定
         try {
@@ -61,46 +51,18 @@ public class ViewDrawActivity extends AppCompatActivity {
                 }
                 @Override
                 protected void onPostExecute(Boolean result) {
-                    drawingView.setBackground(ob);
+                    view.setBackgroundDrawable(ob);
                 }
             };
             task.execute(url);
         } catch (Exception e) {
             System.out.println(e); // IOerror, URLerror
         }
-
-        // 下部ボタンの振る舞い設定
-        findViewById(R.id.commit_button).setOnClickListener(commitDrawing);
-        findViewById(R.id.undo_button).setOnClickListener(undo);
     }
-
-    RadioGroup.OnCheckedChangeListener changeColor = new RadioGroup.OnCheckedChangeListener() {
-        public void onCheckedChanged(RadioGroup group, int checkedId) {
-            RadioButton radioButton = (RadioButton) findViewById(checkedId);
-            drawingView.setColor(radioButton.getTextColors().getDefaultColor());
-        }
-    };
-    View.OnClickListener commitDrawing = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            drawingView.commit(getCacheDir(), post_url);
-        }
-    };
-    View.OnClickListener undo = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            drawingView.undo();
-        }
-    };
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        // 描画画面の縦横サイズを取得
-        vHeight = drawingView.getHeight();
-        vWidth = drawingView.getWidth();
-        drawingView.setViewSize(vHeight, vWidth);
-        System.out.println("ビューサイズ 縦:" + drawingView.getHeight() + "横:" + drawingView.getWidth());
     }
 
     @Override
