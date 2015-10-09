@@ -15,6 +15,23 @@
         android:layout_height="match_parent"
         android:id="@+id/map"
         tools:context=".MainActivity"
-        android:name="com.google.android.gms.maps.SupportMapFragment" />
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_alignParentBottom="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="QRカメラ"
+        android:id="@+id/QR_button"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Congratulations!"
+        android:id="@+id/congratulation"
+        android:layout_above="@+id/QR_button"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
