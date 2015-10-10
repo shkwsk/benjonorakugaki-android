@@ -47,7 +47,6 @@
             android:id="@+id/red_radiobutton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:text="あか"
             android:textColor="@color/red"
             android:checked="true" />
@@ -55,7 +54,6 @@
             android:id="@+id/blue_radiobutton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:text="あお"
             android:textColor="@color/blue" />
         <RadioButton
@@ -64,6 +62,18 @@
             android:layout_height="wrap_content"
             android:text="みどり"
             android:textColor="@color/green" />
+        <RadioButton
+            android:id="@+id/yellow_radiobutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="き"
+            android:textColor="@color/yellow" />
+        <RadioButton
+            android:id="@+id/black_radiobutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="くろ"
+            android:textColor="@color/black" />
     </RadioGroup>
 
 </RelativeLayout>
