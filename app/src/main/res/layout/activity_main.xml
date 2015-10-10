@@ -29,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="fitCenter"
-        android:src="@drawable/virtual_rakugaki_128"
+        android:src="@drawable/virtual_rakugaki_fest_128"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
