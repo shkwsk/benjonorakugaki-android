@@ -10,8 +10,8 @@ android {
         applicationId "${PACKAGE_NAME}"
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 2
-        versionName "1.0.1"
+        versionCode 3
+        versionName "1.0.1.1"
     }
     buildTypes {
         release {
@@ -25,9 +25,6 @@ android {
         }
         master {
             applicationId "${MASTER_PACKAGE_NAME}.master"
-        }
-        fest {
-            applicationId "${MASTER_PACKAGE_NAME}.fest"
         }
     }
 }
